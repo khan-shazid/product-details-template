@@ -3,21 +3,22 @@ import axios from 'axios';
 import '../../assets/custom.css';
 import ReactImageZoom from 'react-image-zoom';
 
-import { ShopCard, Image } from './components/ShopCard';
+import { ShopCard, Image, ProductDescriptionComponent, Attributes } from './components/Component';
 
 function ProductDetails() {
   const [data, setdata] = useState({});
-  const [zoomedImage, setZoomedImage] = useState('https://thumbs.dreamstime.com/z/demo-sign-icon-stamp-blue-vector-92101308.jpg');
+  const [zoomedImage, setZoomedImage] = useState('');
   const [selectedProduct, setSelectedProduct] = useState();
   const [width, setWidth] = useState(0);
   const [shopList, setShopList] = useState([]);
+  const [attributeFlag, setAttributeFlag] = useState(true);
+  const [selectedAttributes, setSelectedAttributes] = useState({});
 
   useEffect(() => {
     console.log('mounted')
     fetchData();
 
   }, []);
-
   async function fetchData(){
     try {
       const response = await axios.get('https://api-dev.evaly.com.bd/core/public/products/colorsize-e7c141f05/');
@@ -49,24 +50,16 @@ function ProductDetails() {
     }
   }
 
-  function showAttributes(){
-    let arr = [];
-    data.attributes.map((item,i)=>{
-      let temp = []
-      arr.push(<h2 key={i}>{item.attribute_name}</h2>)
-      item.attribute_values.map((item2,j)=>{
-        temp.push(<button key={j} style={{margin:5,borderRadius:5}}>{item2.value}</button>)
-      })
-      arr.push(
-        <div className="row" key={i+50}>
-          <div className="col-md-12">
-          {temp}
-          </div>
-        </div>
-      )
-    })
-    return arr;
+  function setAttriIndex(x,y){
+    let temp = selectedAttributes;
+    temp[x] = y;
+    setSelectedAttributes(selectedAttributes);
+    setAttributeFlag(!attributeFlag);
+
+    const keys = Object.keys(temp)
+    console.log("keys",keys)
   }
+
   return (
     <>
       <div className="jumbotron text-center">
@@ -77,13 +70,18 @@ function ProductDetails() {
         <div className="row">
           <div className="col-sm-6 text-center">
             <div className="imgBox" style={{padding:10}}>
+            {
+              zoomedImage ?
               <ReactImageZoom
                 width={500}
                 height={500}
                 zoomWidth={400}
                 zoomStyle='opacity: 1;z-index:999;'
                 img={zoomedImage}
-                />
+                /> :
+                'Loading...'
+            }
+
             </div>
 
             <div style={{display:'flex',justifyContent:'space-between',marginTop:20}}>
@@ -97,12 +95,22 @@ function ProductDetails() {
             </div>
           </div>
           <div className="col-sm-6 text-right">
-            <h2>{selectedProduct >= 0 ? data.product_variants[selectedProduct].product_name : ''}</h2>
-            <h6>SKU - {selectedProduct >= 0 ? data.product_variants[selectedProduct].sku : ''}</h6>
-            <h5>BRAND - {selectedProduct >= 0 ? data.product_variants[selectedProduct].brand_name : ''}</h5>
-            <p>{selectedProduct >= 0 ? data.product_variants[selectedProduct].product_description : ''}</p>
             {
-              data.attributes && showAttributes()
+              selectedProduct >= 0 ? <ProductDescriptionComponent product={data.product_variants[selectedProduct]} /> : 'loading...'
+            }
+            {
+              data.attributes &&
+              (
+                attributeFlag ?
+                  <Attributes
+                    attributes={data.attributes}
+                    selectedObj={selectedAttributes}
+                    setIndexs={setAttriIndex}/>:
+                  <Attributes
+                    attributes={data.attributes}
+                    selectedObj={selectedAttributes}
+                    setIndexs={setAttriIndex}/>
+                )
             }
             <h2>Specifications</h2>
             <div className="table-responsive">
@@ -126,7 +134,7 @@ function ProductDetails() {
 
           </div>
         </div>
-        <div className="row" style={{marginTop:100,marginBottom:200}}>
+        <div className="row shop-container">
           {
             shopList.map((item,i)=><ShopCard key={i} item={item} />)
           }
