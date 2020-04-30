@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../assets/custom.css';
 import ReactImageZoom from 'react-image-zoom';
+
+import '../../assets/custom.css';
 
 import { ShopCard, Image, ProductDescriptionComponent, Attributes } from './components/Component';
 
@@ -16,7 +17,6 @@ function ProductDetails() {
 
   useEffect(() => {
     fetchData();
-
   }, []);
 
   async function fetchData(){
