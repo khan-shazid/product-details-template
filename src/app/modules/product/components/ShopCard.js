@@ -1,17 +1,17 @@
 import React from 'react';
 import '../../../assets/custom.css';
 
-export const ShopCard = () => {
+export const ShopCard = ({item}) => {
   return(
     <div className="col-md-3">
       <div className="shop-card">
         <div className="shop-card-details">
           <img className="shop-card-image"
-            src="https://thumbs.dreamstime.com/z/demo-sign-icon-stamp-blue-vector-92101308.jpg"/>
+            src={item.shop_image}/>
           <div className="shop-card-text-container">
-            <div>Apex</div>
-            <div>Apex</div>
-            <div>Apex</div>
+            <p className="shop-name">{item.shop_name}</p>
+            <p style={{fontSize:9,color:'#9e9e9e'}}>{item.shop_address}</p>
+            <p style={{fontWeight:'bold'}}>{item.price} BDT</p>
           </div>
         </div>
         <div className="shop-card-options">
@@ -23,10 +23,13 @@ export const ShopCard = () => {
   )
 }
 
-export const Image = ({source,dimen,selected}) => {
+export const Image = ({source,dimen,selected,setAsSelected}) => {
   // console.log("selected",selected)
   return(
-    <img className={selected ? 'selected-image' : ''} style={{height:dimen,width:dimen}}
+    <img
+      onClick={()=>setAsSelected(source)}
+      className={selected ? 'selected-image' : ''}
+      style={{height:dimen,width:dimen}}
       src={source}/>
   )
 }

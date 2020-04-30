@@ -10,29 +10,44 @@ function ProductDetails() {
   const [zoomedImage, setZoomedImage] = useState('https://thumbs.dreamstime.com/z/demo-sign-icon-stamp-blue-vector-92101308.jpg');
   const [selectedProduct, setSelectedProduct] = useState();
   const [width, setWidth] = useState(0);
+  const [shopList, setShopList] = useState([]);
 
   useEffect(() => {
     console.log('mounted')
-    async function fetchData(){
-      try {
-        const response = await axios.get('https://api-dev.evaly.com.bd/core/public/products/colorsize-e7c141f05/');
-        // if()
-        console.log(response.data);
-        if(response.data.success){
-          setdata(response.data.data)
-          if(response.data.data.product_variants.length>0){
-            setSelectedProduct(0)
-            setZoomedImage(response.data.data.product_variants[0].product_images[0])
-          }
-          setWidth(500/response.data.data.product_variants[0].product_images.length);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
     fetchData();
 
   }, []);
+
+  async function fetchData(){
+    try {
+      const response = await axios.get('https://api-dev.evaly.com.bd/core/public/products/colorsize-e7c141f05/');
+      // if()
+      console.log(response.data);
+      if(response.data.success){
+        setdata(response.data.data)
+        if(response.data.data.product_variants.length>0){
+          setSelectedProduct(0);
+          setZoomedImage(response.data.data.product_variants[0].product_images[0]);
+          fetchShopList(response.data.data.product_variants[0].variant_id);
+        }
+        setWidth(500/response.data.data.product_variants[0].product_images.length);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function fetchShopList(variantId){
+    try {
+      const response = await axios.get('https://api-dev.evaly.com.bd/core/public/product/shops/'+variantId+'/');
+      console.log("fetchShopList",response)
+      if(response.data.success){
+        setShopList(response.data.data)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function showAttributes(){
     let arr = [];
@@ -76,7 +91,7 @@ function ProductDetails() {
                 data.product_variants && selectedProduct >=0 ?
                 data.product_variants[selectedProduct].product_images.map((item,i)=>{
                   // console.log(item)
-                  return(<Image key={i} source={item} dimen={width} selected={zoomedImage==item} />)
+                  return(<Image key={i} source={item} dimen={width} selected={zoomedImage==item} setAsSelected={setZoomedImage} />)
                 }) : ''
               }
             </div>
@@ -112,14 +127,9 @@ function ProductDetails() {
           </div>
         </div>
         <div className="row" style={{marginTop:100,marginBottom:200}}>
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
-          <ShopCard />
+          {
+            shopList.map((item,i)=><ShopCard key={i} item={item} />)
+          }
         </div>
       </div>
     </>
