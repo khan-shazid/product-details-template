@@ -4,3 +4,42 @@
       -webkit-box-shadow: 0 0 10px #ccc;
       box-shadow: 0 0 10px #ccc;
     }
+
+.shop-card{
+  box-shadow: 0px 2px 5px #888888;
+  border-radius:5px;
+  padding:10px;
+  margin:10px;
+}
+
+.shop-card-details{
+  display:flex;
+}
+
+.shop-card-image{
+  height:100px;
+  width:100px;
+}
+
+.shop-card-text-container{
+  padding:10px;
+}
+
+.shop-card-options{
+  display:flex;
+  margin-top:10px;
+}
+
+.chat-button{
+  flex:1;
+  marginRight:2px;
+  background:blue;
+  color:white;
+}
+
+.buy-button{
+  flex:2;
+  marginLeft:2px;
+  background:green;
+  color:white;
+}
