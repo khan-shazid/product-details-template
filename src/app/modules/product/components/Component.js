@@ -24,7 +24,6 @@ export const ShopCard = ({item}) => {
 }
 
 export const Image = ({source,dimen,selected,setAsSelected}) => {
-  // console.log("selected",selected)
   return(
     <img
       onClick={()=>setAsSelected(source)}
@@ -46,16 +45,11 @@ export const ProductDescriptionComponent = ({product}) => {
 }
 
 export const Attributes = ({attributes,selectedObj,setIndexs}) => {
-    console.log("selectedObj",selectedObj)
     let arr = [];
     attributes.map((item,i)=>{
       let temp = []
       arr.push(<h2 key={i}>{item.attribute_name}</h2>)
       item.attribute_values.map((item2,j)=>{
-        // console.log("checking from loop",(selectedObj[i]==j ? 'selected-image' : ''));
-        // let key = i+'';
-        // console.log("key",key)
-
         temp.push(<button key={j}
                           className={"attribute-button "+(selectedObj[item.attribute_name]==item2.key ? 'selected' : '')}
                           onClick={()=>setIndexs(item.attribute_name,item2.key)}>
