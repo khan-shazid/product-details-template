@@ -28,7 +28,7 @@ export const Image = ({source,dimen,selected,setAsSelected}) => {
     <img
       onClick={()=>setAsSelected(source)}
       className={selected ? 'selected' : ''}
-      style={{height:dimen,width:dimen}}
+      style={{height:dimen,width:dimen,border:'solid 1px black'}}
       src={source}/>
   )
 }

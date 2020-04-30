@@ -82,14 +82,14 @@ function ProductDetails() {
       <div className="container">
         <div className="row">
           <div className="col-sm-6 text-center">
-            <div className="imgBox" style={{padding:10}}>
+            <div className="imgBox">
             {
               zoomedImage ?
               <ReactImageZoom
                 width={500}
                 height={500}
                 zoomWidth={400}
-                zoomStyle='opacity: 1;z-index:999;'
+                zoomStyle='opacity: 1;z-index:999;border: dotted green 2px;'
                 img={zoomedImage}
                 /> :
                 'Loading...'
