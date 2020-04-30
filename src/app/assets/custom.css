@@ -43,3 +43,7 @@
   background:green;
   color:white;
 }
+
+.selected-image{
+  border: solid red 2px;
+}

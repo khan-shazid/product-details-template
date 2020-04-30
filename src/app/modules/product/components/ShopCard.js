@@ -22,3 +22,11 @@ export const ShopCard = () => {
     </div>
   )
 }
+
+export const Image = ({source,dimen,selected}) => {
+  // console.log("selected",selected)
+  return(
+    <img className={selected ? 'selected-image' : ''} style={{height:dimen,width:dimen}}
+      src={source}/>
+  )
+}
