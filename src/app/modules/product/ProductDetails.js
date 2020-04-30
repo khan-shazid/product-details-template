@@ -55,9 +55,29 @@ function ProductDetails() {
     temp[x] = y;
     setSelectedAttributes(selectedAttributes);
     setAttributeFlag(!attributeFlag);
-
-    const keys = Object.keys(temp)
-    console.log("keys",keys)
+    let flag = false;
+    const values = Object.values(temp)
+    // console.log("values",values)
+    for(let i = 0 ; i < data.product_variants.length ; i++){
+      for(let j = 0 ; j < values.length ; j++){
+        if(data.product_variants[i].attribute_values.includes(values[j])){
+          console.log("checked","true",values[j]);
+          flag = true;
+        }else{
+          break;
+          flag = false;
+        }
+      }
+      if(flag){
+        console.log("product id",i)
+        setSelectedProduct(i);
+        if(data.product_variants[i].product_images.length){
+          setZoomedImage(data.product_variants[i].product_images[0]);
+        }
+        fetchShopList(data.product_variants[i].variant_id);
+        break;
+      }
+    }
   }
 
   return (

@@ -57,8 +57,8 @@ export const Attributes = ({attributes,selectedObj,setIndexs}) => {
         // console.log("key",key)
 
         temp.push(<button key={j}
-                          className={"attribute-button "+(selectedObj[item.attribute_name]==j ? 'selected' : '')}
-                          onClick={()=>setIndexs(item.attribute_name,j)}>
+                          className={"attribute-button "+(selectedObj[item.attribute_name]==item2.key ? 'selected' : '')}
+                          onClick={()=>setIndexs(item.attribute_name,item2.key)}>
                           {item2.value}
                   </button>
             )
