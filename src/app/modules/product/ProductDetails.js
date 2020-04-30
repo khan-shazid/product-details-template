@@ -19,6 +19,7 @@ function ProductDetails() {
     fetchData();
 
   }, []);
+  
   async function fetchData(){
     try {
       const response = await axios.get('https://api-dev.evaly.com.bd/core/public/products/colorsize-e7c141f05/');
@@ -85,7 +86,6 @@ function ProductDetails() {
       <div className="jumbotron text-center">
         <h1>Product Details</h1>
       </div>
-
       <div className="container">
         <div className="row">
           <div className="col-sm-6 text-center">
@@ -101,10 +101,8 @@ function ProductDetails() {
                 /> :
                 'Loading...'
             }
-
             </div>
-
-            <div style={{display:'flex',justifyContent:'space-between',marginTop:20}}>
+            <div className="image-list-container">
               {
                 data.product_variants && selectedProduct >=0 ?
                 data.product_variants[selectedProduct].product_images.map((item,i)=>{
@@ -150,8 +148,6 @@ function ProductDetails() {
                 </tbody>
               </table>
             </div>
-
-
           </div>
         </div>
         <div className="row shop-container">
@@ -161,8 +157,6 @@ function ProductDetails() {
         </div>
       </div>
     </>
-
   );
 }
-
 export default ProductDetails;

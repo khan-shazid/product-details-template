@@ -4,6 +4,12 @@
       -webkit-box-shadow: 0 0 10px #ccc;
       box-shadow: 0 0 10px #ccc;
     }
+
+.image-list-container{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px
+}
 /* shop component css start */
 .shop-container{
   margin-top:100px;
