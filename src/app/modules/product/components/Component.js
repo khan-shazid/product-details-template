@@ -67,3 +67,27 @@ export const Attributes = ({attributes,selectedObj,setIndexs}) => {
     })
     return arr;
 }
+
+export const SpecificationList = ({data}) => {
+  return(
+    <>
+      <h2>Specifications</h2>
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <tbody>
+          {
+            data.map((item,i)=>{
+              return(
+                <tr key={i}>
+                  <td>{item.specification_name}</td>
+                  <td>{item.specification_value}</td>
+                </tr>
+              )
+            })
+          }
+          </tbody>
+        </table>
+      </div>
+    </>
+  )
+}

@@ -4,7 +4,7 @@ import ReactImageZoom from 'react-image-zoom';
 
 import '../../assets/custom.css';
 
-import { ShopCard, Image, ProductDescriptionComponent, Attributes } from './components/Component';
+import { ShopCard, Image, ProductDescriptionComponent, Attributes, SpecificationList } from './components/Component';
 
 function ProductDetails() {
   const [data, setdata] = useState({});
@@ -122,24 +122,10 @@ function ProductDetails() {
                     setIndexs={setAttriIndex}/>
                 )
             }
-            <h2>Specifications</h2>
-            <div className="table-responsive">
-              <table className="table table-hover">
-                <tbody>
-                {
-                  data.product_specifications &&
-                  data.product_specifications.map((item,i)=>{
-                    return(
-                      <tr key={i}>
-                        <td>{item.specification_name}</td>
-                        <td>{item.specification_value}</td>
-                      </tr>
-                    )
-                  })
-                }
-                </tbody>
-              </table>
-            </div>
+            {
+              data.product_specifications &&
+              <SpecificationList data={data.product_specifications} />
+            }
           </div>
         </div>
         <div className="row shop-container">
